@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>House Price Predictor</title>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans p-6">
+    <h2 class="text-3xl font-bold mb-6 text-center text-indigo-700">House Price Predictor</h2>
+
+    <form id="predictForm" class="max-w-md mx-auto bg-white p-6 rounded shadow-md transform transition hover:shadow-xl hover:scale-[1.02] duration-300 ease-in-out">
+        <label class="block text-lg font-semibold mb-2">Number of Rooms:</label>
+        <input type="number" id="rooms" required min="1" max="10" class="w-full p-2 border rounded mb-4" />
+
+        <label class="block text-lg font-semibold mb-2">Area (sqft):</label>
+        <input type="number" id="area" required min="100" class="w-full p-2 border rounded mb-4" />
+
+        <label class="block text-lg font-semibold mb-2">Age of House (years):</label>
+        <input type="number" id="age" required min="0" class="w-full p-2 border rounded mb-4" />
+
+        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition transform hover:scale-105 active:scale-95 duration-300 ease-in-out">
+        Predict Price
+        </button>
+    </form>
+
+    <h3 id="result" class="max-w-md mx-auto mt-6 text-xl text-center text-gray-800"></h3>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        document.getElementById('predictForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            // Prepare data from form
+            const data = {
+                rooms: Number(document.getElementById('rooms').value),
+                area: Number(document.getElementById('area').value),
+                age: Number(document.getElementById('age').value),
+            };
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/predict', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                document.getElementById('result').innerText = `Predicted Price: $${result.predicted_price.toFixed(2)}`;
+                
+            } catch (error) {
+                document.getElementById('result').innerText = 'Error: Could not get prediction.';
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
+ 
