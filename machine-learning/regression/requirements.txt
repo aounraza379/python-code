@@ -1,0 +1,6 @@
+# Instructions for setting up the environment for regression tasks in machine learning
+# Required libraries
+numpy
+pandas
+matplotlib
+scikit-learn

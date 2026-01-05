@@ -1,6 +1,4 @@
-# -----------------------------
 # Example 1: High Score Analysis
-# -----------------------------
 data = {
     'Name': ['Kaye','Bryan','Chris','Delidamer','Eve','Farah'],
     'Age': [24,27,22,30,25,29],
